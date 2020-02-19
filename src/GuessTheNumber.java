@@ -1,4 +1,5 @@
 import javax.swing.*;
+import java.awt.*;
 import java.util.Random;
 
 /***********************************************************************************************************************
@@ -9,7 +10,7 @@ import java.util.Random;
  * @consulted Tim Nguyen
  **********************************************************************************************************************/
 
-public class GuessTheNumber {
+public class GuessTheNumber extends JFrame{
 
     int x;
     public static void main(String args[]){
@@ -29,5 +30,35 @@ public class GuessTheNumber {
     }finally {
 
     }
+        SwingUtilities.invokeLater(() -> {
+            JFrame frame = new GuessTheNumber("Guessing Game");
+            //JFrame frame = new TestListener();
+            frame.setTitle("Game Survey");
+            frame.setSize(700, 700);
+            frame.setLocationRelativeTo(null);//centers the frame
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frame.setVisible(true);
+        });
+    }
+
+    private detailsPanel detailsPanel;
+    public GuessTheNumber (String title){
+        super(title);
+
+        //set layout manager
+        setLayout(new BorderLayout());
+        //Create Swing Component
+        JTextArea textArea = new JTextArea();
+        JButton button = new JButton("Okay");
+
+        detailsPanel = new detailsPanel();
+
+        //Add Swing components to content pane
+        Container c = getContentPane();
+
+        c.add(textArea, BorderLayout.CENTER);
+        c.add(detailsPanel, BorderLayout.WEST);
+
+        //add behavior
     }
 }
