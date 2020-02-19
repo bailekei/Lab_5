@@ -1,5 +1,4 @@
 import javax.swing.*;
-import java.awt.*;
 import java.util.Random;
 
 /***********************************************************************************************************************
@@ -12,22 +11,34 @@ import java.util.Random;
 
 public class GuessTheNumber extends JFrame{
 
-    int x;
+    public int random;
     public static void main(String args[]){
 
+    }
+    public void checkGuess(int guess) {
+
+        int attempts = 10;
         Random rand = new Random();
+        random = rand.nextInt(100);
         MyCustomException tj = new MyCustomException();
 
-    try{
+        while (attempts < 10) {
+            try {
+                if (guess > random) {
+                    throw new MyCustomTooHighException();
+                } else if (guess < random) {
+                    throw new MyCustomTooLowException();
+                }
 
+            } catch (MyCustomTooHighException e) {
+                attempts--;
+                JOptionPane.showMessageDialog(null, "The value is smaller", "Alert", JOptionPane.ERROR_MESSAGE);
 
-    }catch (MyCustomTooHighException e){
-        JOptionPane.showMessageDialog(null, "The value is smaller", "Alert", JOptionPane.ERROR_MESSAGE);
+            } catch (MyCustomTooLowException e) {
+                attempts--;
+                JOptionPane.showMessageDialog(null, "The value is bigger", "Alert", JOptionPane.ERROR_MESSAGE);
 
-    } catch (MyCustomTooLowException e){
-        JOptionPane.showMessageDialog(null, "The value is bigger", "Alert", JOptionPane.ERROR_MESSAGE);
-
-    }finally {
+            } finally {
 
     }
         SwingUtilities.invokeLater(() -> {
