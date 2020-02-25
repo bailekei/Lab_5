@@ -2,74 +2,58 @@ import javax.swing.*;
 import java.util.Random;
 
 /***********************************************************************************************************************
- * CIS 162 Project 2
- * Setting up the game board
+ * CIS 163 - Lab 5 Exceptions
+ * Selects a random number to be guessed
  *
- * @author Keilani Bailey and Emma Owen
- * @consulted Tim Nguyen
+ * @author Keilani Bailey & Emma Owen
  **********************************************************************************************************************/
 
 public class GuessTheNumber extends JFrame{
 
     public int random;
-    public static void main(String args[]){
 
-    }
-    public void checkGuess(int guess) {
 
-        int attempts = 10;
+    public int attempts;
+    private String title;
+
+    public GuessTheNumber(){
+        attempts = 0;
         Random rand = new Random();
-        random = rand.nextInt(100);
+        random = rand.nextInt(100) +1;
+    }
+    public int checkGuess(int guess) {
+
         MyCustomException tj = new MyCustomException();
 
-        while (attempts < 10) {
-            try {
+
+        try {
+
                 if (guess > random) {
-                    throw new MyCustomTooHighException();
+                    throw new MyCustomTooHighException(guess);
                 } else if (guess < random) {
-                    throw new MyCustomTooLowException();
+                    throw new MyCustomTooLowException(guess);
                 }
 
             } catch (MyCustomTooHighException e) {
-                attempts--;
+                attempts++;
                 JOptionPane.showMessageDialog(null, "The value is smaller", "Alert", JOptionPane.ERROR_MESSAGE);
 
             } catch (MyCustomTooLowException e) {
-                attempts--;
+                attempts++;
                 JOptionPane.showMessageDialog(null, "The value is bigger", "Alert", JOptionPane.ERROR_MESSAGE);
 
             } finally {
 
-    }
-        SwingUtilities.invokeLater(() -> {
-            JFrame frame = new GuessTheNumber("Guessing Game");
-            //JFrame frame = new TestListener();
-            frame.setTitle("Game Survey");
-            frame.setSize(700, 700);
-            frame.setLocationRelativeTo(null);//centers the frame
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            frame.setVisible(true);
-        });
-    }
 
-    private detailsPanel detailsPanel;
-    public GuessTheNumber (String title){
-        super(title);
+                if(guess == random)
+                {
+                    JOptionPane.showMessageDialog(null, "You Won!", "Alert", JOptionPane.ERROR_MESSAGE);
+                }
+                else if(attempts ==10){
+                    JOptionPane.showMessageDialog(null, "The Number was " + random +"\nGame Over!", "Winner", JOptionPane.ERROR_MESSAGE);
+                }
+                return 10-attempts;
+            }
+  }
 
-        //set layout manager
-        setLayout(new BorderLayout());
-        //Create Swing Component
-        JTextArea textArea = new JTextArea();
-        JButton button = new JButton("Okay");
-
-        detailsPanel = new detailsPanel();
-
-        //Add Swing components to content pane
-        Container c = getContentPane();
-
-        c.add(textArea, BorderLayout.CENTER);
-        c.add(detailsPanel, BorderLayout.WEST);
-
-        //add behavior
-    }
 }
